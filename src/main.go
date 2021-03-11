@@ -55,12 +55,26 @@ func getRecentPost(response http.ResponseWriter, request *http.Request) {
 	json.NewEncoder(response).Encode(&val)
 }
 
+func getAllPosts(response http.ResponseWriter, request *http.Request) {
+	setupCorsResponse(&response, request)
+	if (*request).Method == "OPTIONS" {
+		return
+	}
+	val, err := blogService.GetAllPosts()
+	if err != nil {
+		log.Println(err)
+		json.NewEncoder(response).Encode(err)
+	}
+	json.NewEncoder(response).Encode(&val)
+}
+
 func main() {
 	log.Println("Starting server...")
 	time.Sleep(2 * time.Second)
 	router := mux.NewRouter()
 	router.HandleFunc("/create-post", createPost).Methods("POST", "OPTIONS")
-	router.HandleFunc("/get-recent-post", getRecentPost).Methods("GET", "OPTIONs")
+	router.HandleFunc("/get-recent-post", getRecentPost).Methods("GET", "OPTIONS")
+	router.HandleFunc("/get-all-post", getAllPosts).Methods("GET", "OPTIONS")
 	log.Println("Server started successfully :)")
 	err := http.ListenAndServe(":8080", router)
 	if err != nil {

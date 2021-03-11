@@ -19,10 +19,11 @@ func ConnectDB() {
 	if err != nil {
 		log.Println("Sorry something went wrong. Couldn't connect to database")
 	}
-	log.Println("Successfully connected to database :)")
 	err = client.Ping(ctx, nil)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Sorry something went wrong. Couldn't connect to database")
+	} else {
+		log.Println("Successfully connected to database :)")
 	}
 
 	Database = client.Database("LinovertDB")

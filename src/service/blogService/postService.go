@@ -28,3 +28,12 @@ func GetPost() ([]blog.Posts, error) {
 
 	return val, nil
 }
+
+func GetAllPosts() ([]blog.Posts, error) {
+	val, err := blogDao.GetPosts()
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+	return val, nil
+}

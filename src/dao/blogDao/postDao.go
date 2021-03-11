@@ -12,7 +12,12 @@ import (
 
 func InsertPost(post *blog.Posts) string {
 	dbCol := db.Database.Collection("blog")
-	var id int64 = post.GetId()
+	p, e := GetPosts()
+	if e != nil {
+		log.Println("Sorry something went wrong")
+		return "Sorry something went wrong"
+	}
+	var id int64 = int64(len(p) - 1)
 	var title string = post.GetTitle()
 	var description string = post.GetDescription()
 	var contents []string = post.GetContents()
