@@ -6,8 +6,9 @@ import (
 	"log"
 	"model/blog"
 	"net/http"
-	"service/blogService"
 	"time"
+
+	"github.com/service/blogService"
 
 	"github.com/gorilla/mux"
 )
